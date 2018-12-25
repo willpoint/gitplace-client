@@ -1,0 +1,60 @@
+{
+  "name": "willpoint",
+  "version": "1.0.0",
+  "description": "Nuxt.js project",
+  "author": "Uzondu Enudeme <willpoint@gmail.com>",
+  "private": true,
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0",
+      "port": "3333"
+    }
+  },
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.1.1",
+    "@nuxtjs/proxy": "^1.2.4",
+    "ajv": "^6.2.1",
+    "axios": "^0.17.1",
+    "buefy": "^0.7.1",
+    "bulma": "^0.6.1",
+    "bulma-steps-component": "^0.5.3",
+    "chart.js": "^2.7.2",
+    "file-saver": "^2.0.0",
+    "frappe-charts": "^1.1.0",
+    "humanize-plus": "^1.8.2",
+    "lodash": "^4.17.5",
+    "material-icons": "^0.1.0",
+    "nuxt": "^1.0.0-rc11",
+    "quill": "^1.3.5",
+    "shortid": "^2.2.8",
+    "vee-validate": "^2.0.6",
+    "vue-chartjs": "^3.2.1",
+    "vue-quill-editor": "^3.0.5",
+    "vue-rate": "^2.2.0",
+    "vue-slider-component": "^2.6.2",
+    "vue2-frappe": "^1.0.23",
+    "xlsx": "^0.14.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.3.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-html": "^3.1.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.1"
+  }
+}
