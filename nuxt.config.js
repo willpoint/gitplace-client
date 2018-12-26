@@ -1,6 +1,6 @@
 module.exports = {
   head: {
-    title: 'GIT-PLACE',
+    title: 'GITPLACE',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -18,8 +18,9 @@ module.exports = {
   ],
   plugins: [
     {src: '~plugins/buefy'},
-    {src: '~plugins/nuxt-quill-plugin.js', ssr: false},
-    {src: '~plugins/vue-frappe', ssr: false}
+    {src: '~plugins/ansi-to-html'},
+    {src: '~plugins/nuxt-quill-plugin'},
+    {src: '~plugins/vue-frappe'}
   ],
   mode: 'spa',
   build: {
@@ -31,5 +32,8 @@ module.exports = {
   },
   render: {
     resourceHints: false
+  },
+  env: {
+    socketUrl: 'ws://localhost:12345/echo'
   }
 }
