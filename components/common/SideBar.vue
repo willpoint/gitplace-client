@@ -4,20 +4,28 @@
       Administration
     </p>
     <ul class="menu-list">
-      <li><a>Dashboard</a></li>
-      <li><a class="is-active">Logs</a></li>
-      <li><a>Files</a></li>
-      <li><a>Branches</a></li>
+      <li>
+        <nuxt-link to="/dashboard">Dashboard</nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/logs">Logs</nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/branches">Branches</nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/files">Files</nuxt-link>
+      </li>
       <li><a>Merges</a></li>
       <li><a>Configurations</a></li>
     </ul>
   </aside>
 </template>
 
-<script>
-
-</script>
-
 <style>
+  .nuxt-link-exact-active.nuxt-link-active {
+    background-color: #333;
+    color: #fff;
+  }
 
 </style>

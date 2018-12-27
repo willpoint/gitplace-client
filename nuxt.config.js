@@ -12,6 +12,7 @@ module.exports = {
   },
   loading: { color: '#3B8070' },
   css: [
+    {src: '~/assets/css/main.css'},
     {src: '~/assets/css/material-icons.css'},
     {src: '~/assets/css/buefy-overrides.scss', lang: 'sass'},
     {src: 'quill/dist/quill.snow.css'},

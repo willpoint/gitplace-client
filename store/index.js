@@ -4,7 +4,7 @@ const url = process.env.socketUrl
 const ws = new WebSocket(url)
 
 const dataTypes = [
-  'version', 'branches', 'files'
+  'version', 'branches', 'files', 'shortlog', 'notification'
 ]
 
 export const state = () => ({
@@ -26,11 +26,13 @@ export const mutations = {
   GET_DATA(state, payload) {}
 }
 
+export const actions = {
+  ...genActions(dataTypes)
+}
+
 function genState(types) {
   const states = {}
-  for (let i = 0; i <types.length; i++) {
-    states[types[i]] = ''
-  }
+  for (let i = 0; i <types.length; i++) { states[types[i]] = '' }
   return states
 }
 
@@ -40,4 +42,17 @@ function genGetters(types) {
     getters[types[i]] = (state) => state[types[i]]
   }
   return getters
+}
+
+function genActions(types) {
+  const actions = {}
+  for (let i = 0; i < types.length; i++) {
+    actions[types[i]] = ({commit}, data) => {
+      return new Promise((resolve) => {
+        commit('GET_DATA', data)
+        return resolve()
+      })
+    }
+  }
+  return actions
 }
