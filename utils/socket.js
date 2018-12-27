@@ -9,7 +9,6 @@ export default function createWebSocketPlugin (socket) {
         const { type, body } = mutation.payload
         socket.send(type + ' ' + body)
       }
-
     })
   }
 }

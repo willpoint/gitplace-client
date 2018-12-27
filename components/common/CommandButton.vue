@@ -2,7 +2,7 @@
   <p class="control">
     <button
       @click="handleClick" 
-      class="button is-primary is-outlined">
+      class="button is-small is-dark is-outlined">
       {{ name }}
     </button>
   </p>
@@ -17,9 +17,8 @@ export default {
   },
   methods: {
     handleClick() {
-      const type = this.type || this.command.trim().split(' ')[0]
       this.$emit('clicked', {
-        type: type,
+        type: 'data',
         body: this.command
       })
     }
