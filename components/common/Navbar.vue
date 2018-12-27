@@ -1,10 +1,10 @@
 <template>
-  <nav class="navbar is-primary">
+  <nav class="navbar is-dark">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
         <p class="title is-6 has-text-light is-bold">
           GITPLACE 
-          <span class="tag is-light is-rounded">
+          <span class="tag is-warning is-rounded">
             {{ version }}
           </span>
         </p>

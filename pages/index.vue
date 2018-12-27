@@ -1,20 +1,22 @@
 <template>
   <div class="section">
     <div class="columns">
-      <div class="column is-2">
-        MENU
-      </div>
-      <div class="column is-10">
+      <div class="column is-12">
         <div class="box">
           <b-field>
             <command-button
-              command="log --abbrev-commit --color --date=local"
-              name="View Log"
+              command="status"
+              name="Status"
               @clicked="handleClick"
             />
             <command-button
-              command="branch -a --color"
-              name="View Branches"
+              command="log --color --stat --abbrev-commit --date=local"
+              name="Commit Log"
+              @clicked="handleClick"
+            />
+            <command-button
+              command="log --color --summary --graph --abbrev-commit --pretty=oneline --date=local"
+              name="Commit Graph"
               @clicked="handleClick"
             />
             <command-button
@@ -24,14 +26,22 @@
             />
             <command-button
               command="diff HEAD^ HEAD --color"
-              name="View Commit Diff"
+              name="Committed Code"
+              @clicked="handleClick"
+            />
+            <command-button
+              command="diff --color"
+              name="Uncommitted Code"
+              @clicked="handleClick"
+            />
+            <command-button
+              command="config -l"
+              name="View Config"
               @clicked="handleClick"
             />
           </b-field>
         </div>
-        <div 
-          class="box">
-          <pre v-html="$convert(output) || 'Click a command'"></pre>
+        <div class="box"><pre v-html="$convert(output) || 'Click a command'"></pre>
         </div>
       </div>
     </div>
@@ -55,7 +65,6 @@ export default {
   methods: {
     handleClick(data) {
       this.$store.commit('GET_DATA', data)
-      console.log(this.$convert)
     }
   }
 }
