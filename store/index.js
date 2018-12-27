@@ -4,7 +4,8 @@ const url = process.env.socketUrl
 const ws = new WebSocket(url)
 
 const dataTypes = [
-  'version', 'branches', 'files', 'shortlog', 'notification'
+  'version', 'branches', 'files', 'shortlog', 'notification',
+  'file_history', 'diff', 'commit_output'
 ]
 
 export const state = () => ({

@@ -15,7 +15,7 @@
               @clicked="handleClick"
             />
             <command-button
-              command="log --color --summary --graph --abbrev-commit --pretty=oneline --date=local"
+              command="log --color --graph --abbrev-commit --pretty=oneline --date=local"
               name="Commit Graph"
               @clicked="handleClick"
             />
