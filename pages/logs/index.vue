@@ -62,30 +62,6 @@
           />
         </div>
       </b-tab-item>
-      <b-tab-item label="Last Commit Diff">
-        <div
-          style="position:relative" 
-          class="box">
-          <pre v-html="$convert(output) || 'No information to display'"></pre>
-          <b-loading
-            class="loading" 
-            :is-full-page="false" 
-            :active.sync="isLoading" 
-          />
-        </div>
-      </b-tab-item>
-      <b-tab-item label="Uncommitted Code">
-        <div
-          style="position:relative" 
-          class="box">
-          <pre v-html="$convert(output) || 'No information to display'"></pre>
-          <b-loading
-            class="loading" 
-            :is-full-page="false" 
-            :active.sync="isLoading" 
-          />
-        </div>
-      </b-tab-item>
       <b-tab-item label="Config">
         <div
           style="position:relative" 
@@ -130,8 +106,6 @@ export default {
         {name: 'Status', command: 'status'},
         {name: 'Commit Log', command: 'log --max-count=20 --skip=0 --color --stat --abbrev-commit --date=local', paginate: true},
         {name: 'Commit Graph', command: 'log --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=oneline --date=local', paginate: true},
-        {name: 'Last Commit Diff', command: 'diff HEAD^ HEAD --color --ignore-all-space'},
-        {name: 'Uncommitted Code', command: 'diff --cached --color --ignore-all-space'},
         {name: 'Config', command: 'config -l'}
       ]
     }
