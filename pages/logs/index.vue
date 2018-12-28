@@ -2,24 +2,15 @@
   <div class="section">
     <b-tabs
       v-model="activeTab"
+      @input="handleTabChange"
       type="is-toggle-rounded"
       size="is-small"
-      position="is-centered"
-      >
-      <b-tab-item>
-        <template slot="header">
-          <command-button
-            command="status"
-            name="Status"
-            @clicked="handleClick"
-          />
-        </template>
+      position="is-centered">
+      <b-tab-item label="Status">
         <div
           style="position:relative" 
           class="box">
-          <pre 
-            v-html="$convert(output) || 'No information to display'" 
-          />
+          <pre v-html="$convert(output) || 'No information to display'" />
           <b-loading
             class="loading" 
             :is-full-page="false" 
@@ -27,15 +18,7 @@
           />
         </div>
       </b-tab-item>
-
-      <b-tab-item>
-        <template slot="header">
-          <command-button
-            command="log --max-count=20 --skip=0 --color --ignore-all-space --stat --abbrev-commit --date=local"
-            name="Commit Log"
-            @clicked="(data) => handleClick(data, true)"
-          />
-        </template>
+      <b-tab-item label="Commit Log">
         <div
           style="position:relative" 
           class="box">
@@ -57,15 +40,7 @@
           />
         </div>
       </b-tab-item>
-
-      <b-tab-item>
-        <template slot="header">
-          <command-button
-            command="log --max-count=20 --skip=0 --color --graph --ignore-all-space --abbrev-commit --pretty=oneline --date=local"
-            name="Commit Graph"
-            @clicked="(data) => handleClick(data, true)"
-          />
-        </template>
+      <b-tab-item label="Commit Graph">
         <div
           style="position:relative" 
           class="box">
@@ -87,14 +62,7 @@
           />
         </div>
       </b-tab-item>
-      <b-tab-item>
-        <template slot="header">
-          <command-button
-            command="diff HEAD^ HEAD --color --ignore-all-space"
-            name="Last Commit Diff"
-            @clicked="handleClick"
-          />
-        </template>
+      <b-tab-item label="Last Commit Diff">
         <div
           style="position:relative" 
           class="box">
@@ -106,15 +74,7 @@
           />
         </div>
       </b-tab-item>
-
-      <b-tab-item>
-        <template slot="header">
-          <command-button
-            command="diff --cached --color --ignore-all-space"
-            name="Uncommitted Code"
-            @clicked="handleClick"
-          />
-        </template>
+      <b-tab-item label="Uncommitted Code">
         <div
           style="position:relative" 
           class="box">
@@ -126,15 +86,7 @@
           />
         </div>
       </b-tab-item>
-
-      <b-tab-item>
-        <template slot="header">
-          <command-button
-            command="config -l"
-            name="View Config"
-            @clicked="handleClick"
-          />
-        </template>
+      <b-tab-item label="Config">
         <div
           style="position:relative" 
           class="box">
@@ -167,18 +119,29 @@ export default {
   data() {
     return {
       isLoading: false,
+      doPagination: false,
       output: '',
       title: '',
-      doPagination: false,
-      current: 1,
       currentCommand: '',
+      activeTab: 0,
+      current: 1,
       perPage: 20,
-      activeTab: 0
+      tags: [
+        {name: 'Status', command: 'status'},
+        {name: 'Commit Log', command: 'log --max-count=20 --skip=0 --color --stat --abbrev-commit --date=local', paginate: true},
+        {name: 'Commit Graph', command: 'log --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=oneline --date=local', paginate: true},
+        {name: 'Last Commit Diff', command: 'diff HEAD^ HEAD --color --ignore-all-space'},
+        {name: 'Uncommitted Code', command: 'diff --cached --color --ignore-all-space'},
+        {name: 'Config', command: 'config -l'}
+      ]
     }
   },
   components: {
     CommandButton,
     PTexts
+  },
+  created() {
+    this.handleTabChange(0)
   },
   methods: {
     handleClick(data, paginate) {
@@ -207,6 +170,19 @@ export default {
           this.isLoading = false
         })
       })
+    },
+    handleTabChange(num) {
+      let data = this.tags[num]
+      this.currentCommand = data.command
+      this.output = 'Loading...'
+      if (data.paginate) this.doPagination = true
+      else this.doPagination = false
+      this.isLoading = true
+      this.$store.dispatch('logs', {type: 'logs', body: data.command})
+        .then(({data}) => {
+          this.output = data
+          this.isLoading = false
+        })
     }
   }
 }

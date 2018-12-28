@@ -58,7 +58,15 @@
                 </div>
               </b-field>
             </div>
-            <p v-else class="title is-6">No Tags</p>
+            <div v-else>
+              <b-tag type="is-gold">
+                <b-icon 
+                  icon="tag-multiple"
+                  size="is-small"
+                />
+                (no tags)
+              </b-tag>
+            </div>
           </div>
         </div>
         <div class="box">
@@ -86,7 +94,15 @@
                 </div>
               </b-field>
             </div>
-            <p v-else class="title is-6">No Tags</p>
+            <div v-else>
+              <b-tag type="is-gold">
+                <b-icon 
+                  icon="tag-multiple"
+                  size="is-small"
+                />
+                (no tags)
+              </b-tag>
+            </div>
           </div>
         </div>
       </div>
