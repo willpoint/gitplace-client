@@ -1,10 +1,8 @@
 @import '~bulma/sass/utilities/_all';
 
-$primary: #1f588a;
+$primary: #333;
 $primary-invert: findColorInvert($primary);
-$site: #1f588a;
-$site-invert: findColorInvert($site);
-$light-gold: #e0dcbe;
+$light-gold: #dbd49b;
 $inverse-gold: findColorInvert($light-gold);
 
 // set up colors to use as bulma classes eg. (is-white)
@@ -13,23 +11,25 @@ $colors: (
   "black": ($black, $white),
   "light": ($light, $light-invert),
   "dark": ($dark, $dark-invert),
-  "primary": ($site, $site-invert),
+  "primary": ($primary, $primary-invert),
   "info": ($info, $info-invert),
   "success": ($success, $success-invert),
   "warning": ($warning, $warning-invert),
   "danger": ($danger, $danger-invert),
-  "site": ($site, $site-invert),
-  "gold": ($light-gold, $inverse-gold)
+  "gold": ($light-gold, $inverse-gold),
+  "darkgold": ($light, $inverse-gold)
   );
   
-  $link: $site;
-  $link-invert: $site-invert;
-  $link-focus-border: $site;
+  $link: $primary;
+  $link-invert: $primary-invert;
+  $link-focus-border: $primary;
   $section-padding: 1.5rem 1.5rem;
   $box-background-color: rgba(249, 249, 249, 0.41);
 
   $menu-item-active-background-color: $dark;
-  
+
+
+    
   // import bulma and buefy styles
   @import '~bulma';
   @import '~buefy/src/scss/buefy';

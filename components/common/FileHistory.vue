@@ -1,7 +1,7 @@
 <template>
   <div class="modal-card" style="width: auto">
     <header class="modal-card-head">
-        <p class="modal-card-title">File - {{ name }}</p>
+      <p class="modal-card-title">File - {{ name }}</p>
     </header>
     <section class="modal-card-body">
       <div class="content">
@@ -29,9 +29,14 @@ export default {
     diff: String,
     file_history: String
   },
-  methods: {
+  computed: {
     canDoCommit() {
       return this.diff != ''
+    }
+  },
+  methods: {
+    doCommit() {
+
     }
   }
 }

@@ -3,7 +3,8 @@
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
         <p class="title is-6 has-text-light is-bold">
-          GITPLACE 
+          GitPlace
+          &nbsp; 
           <span class="tag is-warning is-rounded">
             {{ version }}
           </span>
@@ -13,9 +14,9 @@
     <div class="navbar-menu">
       <div class="navbar-start">
         
-        <a class="navbar-item">
+        <!-- <a class="navbar-item">
           Documentation
-        </a>
+        </a> -->
 
       </div>
     </div>

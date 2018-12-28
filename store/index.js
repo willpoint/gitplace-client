@@ -1,11 +1,15 @@
 import createWebSocketPlugin from '@/utils/socket.js'
+import axios from 'axios'
 
-const url = process.env.socketUrl
-const ws = new WebSocket(url)
+const httpURL = "http://localhost:12345/command"
+const wsURL = process.env.socketUrl
+const ws = new WebSocket(wsURL)
 
 const dataTypes = [
-  'version', 'branches', 'files', 'shortlog', 'notification',
-  'file_history', 'diff', 'commit_output'
+  'version', 'branches', 'files', 
+  'shortlog', 'notification', 'file_history', 
+  'diff', 'commit_output', 'logs', 
+  'num_commits', 'tags'
 ]
 
 export const state = () => ({
@@ -22,6 +26,7 @@ export const getters = {
 
 export const mutations = {
   SET_DATA(state, {type, data}) { 
+    
     state[type] = data 
   },
   GET_DATA(state, payload) {}
@@ -49,9 +54,18 @@ function genActions(types) {
   const actions = {}
   for (let i = 0; i < types.length; i++) {
     actions[types[i]] = ({commit}, data) => {
-      return new Promise((resolve) => {
-        commit('GET_DATA', data)
-        return resolve()
+      return new Promise((resolve, reject) => {
+        axios({
+          url: httpURL,
+          method: 'post',
+          data: data,
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then((resp) => {
+          commit('SET_DATA', resp.data)
+          resolve(resp.data)
+        }).catch(reject)
       })
     }
   }

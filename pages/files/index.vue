@@ -41,45 +41,48 @@ export default {
   methods: {
     showHistory(file) {
       const vm = this
-      vm.$store.commit('GET_DATA', {
-        type: 'file_history',
-        body: 'log --follow --abbrev-commit --stat --color -- ' + file
-      })
-      vm.$store.commit('GET_DATA', {
-        type: 'diff',
-        body: 'diff'
-      })
-      vm.$modal.open({
-        parent: vm,
-        component: FileHistory,
-        hasModalCard: true,
-        props: {
-          name: file,
-          diff: vm.diff,
-          file_history: vm.file_history
-        },
-        events: {
-          commit: function(message, name) {
-            vm.$store.commit({
-              type: 'commit_output',
-              body: 'commit -m ' + message + ' ' + name
-            })
-            this.$snackbar.open({
-              duration: 5000,
-              message: 'Snackbar with red action, positioned on bottom-left and a callback',
-              type: 'is-danger',
-              position: 'is-bottom-left',
-              actionText: 'Undo',
-              queue: false,
-              onAction: () => {
-                this.$toast.open({
-                  message: 'Action pressed',
-                  queue: false
-                })
-              }
-            })
+      Promise.all([
+        vm.$store.dispatch('file_history', {
+          type: 'file_history',
+          body: 'log --follow --abbrev-commit --stat --color -- ' + file
+        }),
+        vm.$store.dispatch('diff', {
+          type: 'diff',
+          body: 'diff --cached'
+        })
+      ]).then(([fh, df]) => {
+        vm.$modal.open({
+          parent: vm,
+          component: FileHistory,
+          hasModalCard: true,
+          props: {
+            name: file,
+            diff: df.data,
+            file_history: fh.data
+          },
+          events: {
+            commit: function(message, name) {
+              vm.$store.commit({
+                type: 'commit_output',
+                body: 'commit -m ' + message + ' ' + name
+              })
+              this.$snackbar.open({
+                duration: 5000,
+                message: 'Snackbar with red action, positioned on bottom-left and a callback',
+                type: 'is-danger',
+                position: 'is-bottom-left',
+                actionText: 'Undo',
+                queue: false,
+                onAction: () => {
+                  this.$toast.open({
+                    message: 'Action pressed',
+                    queue: false
+                  })
+                }
+              })
+            }
           }
-        }
+        })
       })
     }
   }

@@ -32,7 +32,7 @@ export default {
   }
   .sidebar {
     position: absolute;
-    background-color: #e0dcbe;
+    background-color: #dad4a4;
     padding: 15px;
     min-height: 95vh;
     top: 0;

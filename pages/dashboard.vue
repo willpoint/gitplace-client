@@ -1,6 +1,20 @@
 <template>
   <div class="section">
-    {{ shortlog }}
+    <b-tabs
+      v-model="activeTab">
+      <b-tab-item 
+        label="Pictures" 
+        icon="google-photos"
+      />
+      <b-tab-item 
+        label="Music" 
+        icon="library-music"
+      />
+      <b-tab-item 
+        label="Videos" 
+        icon="video"
+      />
+    </b-tabs>
   </div>
 </template>
 
@@ -10,8 +24,14 @@ export default {
   fetch({store}) {
     return store.dispatch('shortlog', {
       type: 'shortlog',
-      body: 'shortlog -n -s'
+      body: 'shortlog commit'
+      // body: 'rev-list HEAD --count'
     })
+  },
+  data() {
+    return {
+      activeTab: 0
+    }
   },
   computed: {
     ...mapGetters({
