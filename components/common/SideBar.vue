@@ -8,7 +8,7 @@
     <ul class="menu-list">
       <li>
         <nuxt-link to="/dashboard">
-          <b-icon icon="chart-bubble" size="is-small"></b-icon>
+          <b-icon icon="chart-bar" size="is-small"></b-icon>
           Dashboard
         </nuxt-link>
       </li>

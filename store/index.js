@@ -1,15 +1,16 @@
 import createWebSocketPlugin from '@/utils/socket.js'
 import axios from 'axios'
 
-const httpURL = "http://localhost:12345/command"
-const wsURL = process.env.socketUrl
+// todo(uz): Make this address dynamic?
+const httpURL = process.env.httpURL
+const wsURL = process.env.socketURL
 const ws = new WebSocket(wsURL)
 
 const dataTypes = [
   'version', 'branches', 'files', 
   'shortlog', 'notification', 'file_history', 
   'diff', 'commit_output', 'logs', 
-  'num_commits', 'tags'
+  'num_commits', 'tags', 'file_content'
 ]
 
 export const state = () => ({
@@ -65,7 +66,10 @@ function genActions(types) {
         }).then((resp) => {
           commit('SET_DATA', resp.data)
           resolve(resp.data)
-        }).catch(reject)
+        }).catch(err => {
+          console.log(types[i], " error: ", err)
+          return reject(err)
+        })
       })
     }
   }

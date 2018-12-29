@@ -17,6 +17,13 @@
         />
       </button>
     </p>
+    <p class="control">
+      <button 
+        class="button is-small is-gold"
+        @click="viewFile">
+        view
+      </button>
+    </p>
   </b-field>
 </template>
 
@@ -28,6 +35,9 @@ export default {
   methods: {
     viewHistory() {
       this.$emit('history', this.name)
+    },
+    viewFile() {
+      this.$emit('file', this.name)
     }
   }
 }

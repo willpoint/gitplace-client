@@ -2,14 +2,21 @@
   <div class="section">
     <p class="title is-6">Project Files</p>
     <div class="columns">
-      <div class="column is-12">
+      <div class="column is-5">
         <div class="box">
           <git-file
             v-for="(f, i) in fileArray"
             :key="i"
             :name="f"
             @history="showHistory"
+            @file="showFile"
           />
+        </div>
+      </div>
+      <div class="column is-7">
+        <div class="box">
+          <p class="title is-6">{{ current_file }}</p>
+          <pre><code>{{ file_content || 'Click view to see the content of a file' }}</code></pre>
         </div>
       </div>
     </div>
@@ -29,7 +36,7 @@ export default {
   },
   computed: {
     ...mapGetters(
-      ['files', 'file_history', 'diff', 'commit_output']
+      ['files']
     ),
     fileArray() {
       return this.files.split('\n').filter(f => f != '')
@@ -38,7 +45,30 @@ export default {
   components: {
     GitFile
   },
+  data() {
+    return {
+      file_content: '',
+      current_file: ''
+    }
+  },
   methods: {
+    showFile(file) {
+      this.current_file = file
+      return new Promise((resolve, reject) => {
+        this.$store.dispatch('file_content', {
+          type: 'file_content',
+          body: 'ls-files -s -- ' + file
+        }).then(resp => {
+          const sha1 = resp.data.split(' ')[1]
+          this.$store.dispatch('file_content', {
+              type: 'file_content',
+              body: 'cat-file ' + sha1 + ' -p'
+            }).then((rsp) => {
+              this.file_content = rsp.data
+            })
+        })
+      })
+    },
     showHistory(file) {
       const vm = this
       Promise.all([
