@@ -21,8 +21,7 @@
               </b-select>
             </b-field>
             <button 
-              class="button is-small is-gold"
-              @click="handleCheckout">
+              class="button is-small is-gold">
               Checkout
             </button>
           </form>
@@ -122,7 +121,7 @@ export default {
       type: 'tags',
       body: 'tag'
     })
-    return Promise.all([branches])
+    return Promise.all([branches, tags])
   },
   data() {
     return {
