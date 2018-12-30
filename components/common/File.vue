@@ -12,7 +12,7 @@
         class="button is-small is-dark"
         @click="viewHistory">
         <b-icon 
-          icon="eye" 
+          icon="history" 
           size="is-small"
         />
       </button>

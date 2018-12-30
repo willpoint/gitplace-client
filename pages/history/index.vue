@@ -79,7 +79,6 @@
 </template>
 
 <script>
-import CommandButton from '@/components/common/CommandButton'
 import PTexts from '@/components/common/Paragraphs'
 import { mapGetters } from 'vuex'
 export default {
@@ -111,7 +110,6 @@ export default {
     }
   },
   components: {
-    CommandButton,
     PTexts
   },
   created() {
@@ -132,25 +130,30 @@ export default {
     },
     handlePageChange(a) {
       this.isLoading = true
-      return new Promise((resolve, reject) => {
-        let skip = (Number(a) - 1) * this.perPage
-        const skipRegex = /--skip=(\d+)/g
-        const newCmd = this.currentCommand.replace(skipRegex, "--skip="+skip)
-        this.$store.dispatch('logs', {
-          type: 'logs',
-          body: newCmd
-        }).then(({data}) => {
-          this.output = data
-          this.isLoading = false
-        })
+      let skip = (Number(a) - 1) * this.perPage
+      const skipRegex = /--skip=(\d+)/g
+      const newCmd = this.currentCommand.replace(skipRegex, "--skip="+skip)
+      this.$store.dispatch('logs', {
+        type: 'logs',
+        body: newCmd
+      }).then(({data}) => {
+        this.output = data
+        this.isLoading = false
+      }).catch(err => {
+        this.isLoading = false
+        console.log(err)
       })
     },
     handleTabChange(num) {
       let data = this.tags[num]
       this.currentCommand = data.command
       this.output = 'Loading...'
-      if (data.paginate) this.doPagination = true
-      else this.doPagination = false
+      if (data.paginate) {
+        this.doPagination = true
+        this.current = 1
+      } else {
+        this.doPagination = false
+      }
       this.isLoading = true
       this.$store.dispatch('logs', {type: 'logs', body: data.command})
         .then(({data}) => {

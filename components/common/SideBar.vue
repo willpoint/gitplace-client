@@ -3,7 +3,7 @@
     style="position:relative;height:90vh" 
     class="menu">
     <p class="menu-label">
-      Administration
+      Revisions
     </p>
     <ul class="menu-list">
       <li>
@@ -13,7 +13,7 @@
         </nuxt-link>
       </li>
       <li>
-        <nuxt-link to="/logs">
+        <nuxt-link to="/history">
           <b-icon icon="delta" size="is-small"></b-icon>
           History
         </nuxt-link>
