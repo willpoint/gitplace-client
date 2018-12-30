@@ -10,7 +10,7 @@ export default {
   fetch({store}) {
     return store.dispatch('shortlog', {
       type: 'shortlog',
-      body: 'shortlog -s -n'
+      body: 'shortlog --summary --numbered HEAD'
     })
   },
   computed: {
