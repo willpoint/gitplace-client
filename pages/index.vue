@@ -1,7 +1,7 @@
 <script>
 export default {
   fetch({redirect}) {
-    return redirect('/history')
+    return redirect('/dashboard')
   }
 }
 </script>

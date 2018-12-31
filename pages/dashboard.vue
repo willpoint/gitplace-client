@@ -37,7 +37,8 @@
           <p class="title is-6">Top Contributors ( &lt;= 50 )</p>
           <summary-chart 
             :chart-data="summary"
-            :option="options"
+            :options="options"
+            height="450"
           />
         </div>
       </div>
@@ -58,9 +59,10 @@ export default {
   data() {
     return {
       options: {
-        responsive: false,
+        responsive: true,
         legend: {
-          position: 'bottom'
+          display: true,
+          position: 'top'
         }
       },
       perPage: 20,
@@ -74,11 +76,11 @@ export default {
       const ret = []
       for (let i = 0; i < contribs.length; i++) {
         let contrib = contribs[i].trim().split('\t')
-        let one = {}
         let identity = contrib[1].split(' ')
         let email = identity[identity.length-1]
         let name = contrib[1].slice(0, -(email.length))
         
+        let one = {}
         one["name"] = name
         one["email"] = email
         one["contribs"] = contrib[0]
@@ -91,7 +93,6 @@ export default {
       const chartData = {
         labels: [],
         datasets: [{
-          label: 'Top 50 Contributions',
           data: [],
           backgroundColor: []
         }]
@@ -100,14 +101,15 @@ export default {
       for (let i = 0; i < contribs.length; i++) {
         // show chart for top 50 contributions
         if (i == 49) break;
-        let c = contribs[i]
-        let contrib = c.trim().split('\t')
+
+        let contrib = contribs[i].trim().split('\t')
+
         chartData.datasets[0].data.push(Number(contrib[0]))
         
         // generate a color based on contribution value
         // using r = 50, and varying g and b with values of contribution
         // ANDing the values of contribution to keep it from overflowing 0xff
-        let color = "rgba(50, " + (+contrib[0] & 0xff) + ", " + ((+contrib[0] * 123) & 0xff) + ", 1)"
+        let color = "rgba(50," + (+contrib[0]&0xff) + "," + ((+contrib[0]*123)&0xff) + ",1)"
         chartData.datasets[0].backgroundColor.push(color)
         
         // exclude email address from name
