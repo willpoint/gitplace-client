@@ -1,10 +1,18 @@
 <template>
   <div class="section">
-    <div class="box">
-      <summary-chart 
-        :chart-data="summary"
-        :option="options"
-      />
+    <div class="columns">
+      <div class="column is-7">
+        <div class="box">
+          <p class="title is-6">Top 50 Contributors</p>
+          <summary-chart 
+            :chart-data="summary"
+            :option="options"
+          />
+        </div>
+      </div>
+      <div class="column is-5">
+        <!-- table for all contributions -->
+      </div>
     </div>
   </div>
 </template>
@@ -23,9 +31,6 @@ export default {
     return {
       options: {
         responsive: false,
-        legend: {
-          display: false
-        }
       }
     }
   },
@@ -35,7 +40,7 @@ export default {
       const chartData = {
         labels: [],
         datasets: [{
-          label: '# of Contributions',
+          label: 'Top 50 Contributions',
           data: [],
           backgroundColor: []
         }]
@@ -49,7 +54,11 @@ export default {
         let c = contribs[i]
         let contrib = c.trim().split('\t')
         chartData.datasets[0].data.push(Number(contrib[0]))
-        chartData.datasets[0].backgroundColor.push('#dbd49b')
+        // generate a color based on contribution value
+        // using r = 50, and varying g and b with values of contribution
+        // ANDing the values of contribution to keep it from overflowing 0xff
+        let color = "rgba(50, " + (+contrib[0] & 0xff) + ", " + ((+contrib[0] * 123) & 0xff) + ", 1)"
+        chartData.datasets[0].backgroundColor.push(color)
         chartData.labels.push(contrib[1])
       }
       return chartData
