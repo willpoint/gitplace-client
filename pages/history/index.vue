@@ -103,8 +103,8 @@ export default {
       perPage: 20,
       tags: [
         {name: 'Status', command: 'status'},
-        {name: 'Commit Log', command: 'log --max-count=20 --skip=0 --color --stat --abbrev-commit --date=local', paginate: true},
-        {name: 'Commit Graph', command: 'log --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=oneline --date=local', paginate: true},
+        {name: 'Commit Log', command: 'log -w --max-count=20 --skip=0 --color --stat --abbrev-commit --date=local', paginate: true},
+        {name: 'Commit Graph', command: 'log -w --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=oneline --date=local', paginate: true},
         {name: 'Config', command: 'config -l'}
       ]
     }

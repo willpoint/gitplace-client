@@ -10,18 +10,18 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  loading: { color: '#3B8070' },
+  loading: { 
+    color: 'gold',
+    height: '30px;'
+  },
   css: [
     {src: '~/assets/css/main.css'},
     {src: '~/assets/css/material-icons.css'},
     {src: '~/assets/css/buefy-overrides.scss', lang: 'sass'},
-    {src: 'quill/dist/quill.snow.css'},
   ],
   plugins: [
     {src: '~plugins/buefy'},
     {src: '~plugins/ansi-to-html'},
-    {src: '~plugins/nuxt-quill-plugin'},
-    {src: '~plugins/vue-frappe'}
   ],
   mode: 'spa',
   build: {

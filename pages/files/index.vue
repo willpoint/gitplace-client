@@ -74,7 +74,7 @@ export default {
       Promise.all([
         vm.$store.dispatch('file_history', {
           type: 'file_history',
-          body: 'log --follow --abbrev-commit --stat --color -- ' + file
+          body: 'log -w --follow --abbrev-commit --stat --color -- ' + file
         }),
         vm.$store.dispatch('diff', {
           type: 'diff',
