@@ -3,73 +3,75 @@
     <div class="columns">
       <div class="column is-4">
         <div class="box">
-          <p class="title is-6">
-            Checkout Branch
-          </p>
-          <form @submit.prevent="handleCheckoutBranch">
-            <b-field>
-              <b-select 
-                placeholder="Select a branch"
-                v-model="form.branch"
-                expanded>
-                <option
-                  v-for="(b, i) in branchChoice"
-                  :key="i"
-                  :value="b">
-                  {{ b }}
-                </option>
-              </b-select>
-            </b-field>
-            <button 
-              class="button is-small is-gold">
-              Checkout
-            </button>
-          </form>
-          <hr />
-        </div>
-        <div class="box">
-          <p class="title is-6">
-            Checkout Tags
-          </p>
-          <form @submit.prevent="handleCheckoutTag">
-            <b-field>
-              <b-select 
-                placeholder="Select a branch"
-                v-model="form.tag"
-                expanded>
-                <option
-                  v-for="(b, i) in tagChoice"
-                  :key="i"
-                  :value="b">
-                  {{ b }}
-                </option>
-              </b-select>
-            </b-field>
-            <button 
-              class="button is-small is-gold">
-              Checkout
-            </button>
-          </form>
-          <hr />
-        </div>
-        <div class="box">
-          <p class="title is-6">
-            Checkout SHA1 refs
-          </p>
-          <form @submit.prevent="handleSHA1Checkout">
-            <b-field 
-              message="You can enter an abbreviated sha1 hash">
-              <b-input 
-                placeholder="Enter SHA1"
-                v-model="form.sha1"
-              />
-            </b-field>
-            <button 
-              class="button is-small is-gold">
-              Checkout
-            </button>
-          </form>
-          <hr />
+          <div class="">
+            <p class="title is-6">
+              Checkout Branch
+            </p>
+            <form @submit.prevent="handleCheckout('branch')">
+              <b-field>
+                <b-select 
+                  placeholder="Select a branch"
+                  v-model="form.branch"
+                  expanded>
+                  <option
+                    v-for="(b, i) in branchChoice"
+                    :key="i"
+                    :value="b">
+                    {{ b }}
+                  </option>
+                </b-select>
+              </b-field>
+              <button 
+                class="button is-small is-gold">
+                Checkout
+              </button>
+            </form>
+            <hr />
+          </div>
+          <div class="">
+            <p class="title is-6">
+              Checkout Tags
+            </p>
+            <form @submit.prevent="handleCheckout('tag')">
+              <b-field>
+                <b-select 
+                  placeholder="Select a branch"
+                  v-model="form.tag"
+                  expanded>
+                  <option
+                    v-for="(b, i) in tagChoice"
+                    :key="i"
+                    :value="b">
+                    {{ b }}
+                  </option>
+                </b-select>
+              </b-field>
+              <button 
+                class="button is-small is-gold">
+                Checkout
+              </button>
+            </form>
+            <hr />
+          </div>
+          <div class="">
+            <p class="title is-6">
+              Checkout SHA1 refs
+            </p>
+            <form @submit.prevent="handleCheckout('sha1')">
+              <b-field 
+                message="You can enter an abbreviated sha1 hash">
+                <b-input 
+                  placeholder="Enter SHA1"
+                  v-model="form.sha1"
+                />
+              </b-field>
+              <button 
+                class="button is-small is-gold">
+                Checkout
+              </button>
+            </form>
+            <hr />
+          </div>
         </div>
       </div>
       <div class="column is-8">
@@ -104,7 +106,7 @@
                   icon="tag-multiple"
                   size="is-small"
                 />
-                (no tags)
+                (no branches?)
               </b-tag>
             </div>
           </div>
@@ -169,6 +171,7 @@ export default {
       form: {
         branch: null,
         tag: null,
+        sha1: null,
       }
     }
   },
@@ -195,36 +198,17 @@ export default {
     }
   },
   methods: {
-    handleCheckoutBranch() {
+    handleCheckout(name) {
+      let ref = this.form[name]
       this.$store.commit('GET_DATA', {
         type: 'notification',
-        body: 'checkout ' + this.form.branch
+        body: 'checkout ' + ref
       })
       this.$store.commit('GET_DATA', {
         type: 'branches',
         body: 'branch'
       })
-    },
-    handleCheckoutTag() {
-      this.$store.commit('GET_DATA', {
-        type: 'notification',
-        body: 'checkout ' + this.form.tag
-      })
-      this.$store.commit('GET_DATA', {
-        type: 'branches',
-        body: 'branch'
-      })
-    },
-    handleSHA1Checkout() {
-      if (!this.form.sha1) return
-      this.$store.commit('GET_DATA', {
-        type: 'notification',
-        body: 'checkout ' + this.form.sha1
-      })
-      this.$store.commit('GET_DATA', {
-        type: 'branches',
-        body: 'branch'
-      })   
+      this.form[name] = null
     }
   }
 }
