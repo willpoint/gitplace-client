@@ -6,11 +6,11 @@
       type="is-toggle-rounded"
       size="is-small"
       position="is-centered">
-      <b-tab-item label="Status">
+      <b-tab-item label="Last Change-Set">
         <div
           style="position:relative" 
           class="box">
-          <pre v-html="$convert(output) || 'No information to display'" />
+          <pre v-html="$convert(output) || 'No information to display'"></pre>
           <b-loading
             class="loading" 
             :is-full-page="false" 
@@ -62,11 +62,11 @@
           />
         </div>
       </b-tab-item>
-      <b-tab-item label="Config">
+      <b-tab-item label="Status">
         <div
           style="position:relative" 
           class="box">
-          <pre v-html="$convert(output) || 'No information to display'"></pre>
+          <pre v-html="$convert(output) || 'No information to display'" />
           <b-loading
             class="loading" 
             :is-full-page="false" 
@@ -102,10 +102,10 @@ export default {
       current: 1,
       perPage: 20,
       tags: [
-        {name: 'Status', command: 'status'},
+        {name: 'Last Changeset', command: 'diff HEAD^ HEAD --color'},
         {name: 'Commit Log', command: 'log -w --max-count=20 --skip=0 --color --stat --abbrev-commit --date=local', paginate: true},
         {name: 'Commit Graph', command: 'log -w --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=oneline --date=local', paginate: true},
-        {name: 'Config', command: 'config -l'}
+        {name: 'Status', command: 'status'}
       ]
     }
   },
