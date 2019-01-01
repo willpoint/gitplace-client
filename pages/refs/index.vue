@@ -6,14 +6,14 @@
           <p class="title is-6">
             Checkout Branch
           </p>
-          <form @submit.prevent="handleCheckout">
+          <form @submit.prevent="handleCheckoutBranch">
             <b-field>
               <b-select 
                 placeholder="Select a branch"
                 v-model="form.branch"
                 expanded>
                 <option
-                  v-for="(b, i) in choice"
+                  v-for="(b, i) in branchChoice"
                   :key="i"
                   :value="b">
                   {{ b }}
@@ -26,9 +26,50 @@
             </button>
           </form>
           <hr />
-          <b-message>
-            Actions such as merge, rebase, etc may be done on the command line
-          </b-message>
+        </div>
+        <div class="box">
+          <p class="title is-6">
+            Checkout Tags
+          </p>
+          <form @submit.prevent="handleCheckoutTag">
+            <b-field>
+              <b-select 
+                placeholder="Select a branch"
+                v-model="form.tag"
+                expanded>
+                <option
+                  v-for="(b, i) in tagChoice"
+                  :key="i"
+                  :value="b">
+                  {{ b }}
+                </option>
+              </b-select>
+            </b-field>
+            <button 
+              class="button is-small is-gold">
+              Checkout
+            </button>
+          </form>
+          <hr />
+        </div>
+        <div class="box">
+          <p class="title is-6">
+            Checkout SHA1 refs
+          </p>
+          <form @submit.prevent="handleSHA1Checkout">
+            <b-field 
+              message="You can enter an abbreviated sha1 hash">
+              <b-input 
+                placeholder="Enter SHA1"
+                v-model="form.sha1"
+              />
+            </b-field>
+            <button 
+              class="button is-small is-gold">
+              Checkout
+            </button>
+          </form>
+          <hr />
         </div>
       </div>
       <div class="column is-8">
@@ -135,9 +176,13 @@ export default {
     ...mapGetters(
       ['branches', 'tags', 'notification']
     ),
-    choice() {
+    branchChoice() {
       const c = this.branches.split('\n')
       // Ensure already checked out branch is not in choice
+      return c.filter(v => v != '' && !v.includes('*'))
+    },
+    tagChoice() {
+      const c = this.tags.split('\n')
       return c.filter(v => v != '' && !v.includes('*'))
     },
     filteredBranches() {
@@ -150,7 +195,7 @@ export default {
     }
   },
   methods: {
-    handleCheckout() {
+    handleCheckoutBranch() {
       this.$store.commit('GET_DATA', {
         type: 'notification',
         body: 'checkout ' + this.form.branch
@@ -159,6 +204,27 @@ export default {
         type: 'branches',
         body: 'branch'
       })
+    },
+    handleCheckoutTag() {
+      this.$store.commit('GET_DATA', {
+        type: 'notification',
+        body: 'checkout ' + this.form.tag
+      })
+      this.$store.commit('GET_DATA', {
+        type: 'branches',
+        body: 'branch'
+      })
+    },
+    handleSHA1Checkout() {
+      if (!this.form.sha1) return
+      this.$store.commit('GET_DATA', {
+        type: 'notification',
+        body: 'checkout ' + this.form.sha1
+      })
+      this.$store.commit('GET_DATA', {
+        type: 'branches',
+        body: 'branch'
+      })   
     }
   }
 }
