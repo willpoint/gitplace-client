@@ -31,6 +31,18 @@
         </nuxt-link>
       </li>
     </ul>
+
+    <div class="poweredby">
+      <div class="box">
+        <p>
+          GitPlace by Uzondu Enudeme
+        </p>
+        <p>
+          &lt;willpoint@gmail.com&gt;
+        </p>
+      </div>
+    </div>
+
   </aside>
 </template>
 
@@ -44,6 +56,16 @@
     bottom: 0;
     left: 0;
     right: 0;
+  }
+  .poweredby {
+    display: none;
+    position: fixed;
+    bottom: 5rem;
+    height: 30px;
+    border-radius: 3px;
+    padding: 2px;
+    font-size: 12px;
+    width: 12.5rem;
   }
 
 </style>
