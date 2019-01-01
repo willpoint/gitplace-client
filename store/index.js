@@ -27,7 +27,6 @@ export const getters = {
 
 export const mutations = {
   SET_DATA(state, {type, data}) { 
-    
     state[type] = data 
   },
   GET_DATA(state, payload) {}
@@ -64,10 +63,12 @@ function genActions(types) {
             "Content-Type": "application/json"
           }
         }).then((resp) => {
+          if (resp.data.type == 'error') {
+            throw new Error('An unexpected error occured')
+          }
           commit('SET_DATA', resp.data)
           resolve(resp.data)
         }).catch(err => {
-          console.log(types[i], " error: ", err)
           return reject(err)
         })
       })

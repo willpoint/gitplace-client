@@ -86,7 +86,7 @@ export default {
     return store.dispatch('num_commits', {
       type: 'num_commits',
       body: 'rev-list HEAD --count'
-    })
+    }).catch(console.log)
   },
   computed: {
     ...mapGetters(['num_commits'])
@@ -126,6 +126,9 @@ export default {
         .then(({data}) => {
           this.output = data
           this.isLoading = false
+        }).catch(err => {
+          this.isLoading = false
+          this.output = err.message
         })
     },
     handlePageChange(a) {
@@ -141,7 +144,7 @@ export default {
         this.isLoading = false
       }).catch(err => {
         this.isLoading = false
-        console.log(err)
+        this.output = err.message
       })
     },
     handleTabChange(num) {
@@ -159,6 +162,9 @@ export default {
         .then(({data}) => {
           this.output = data
           this.isLoading = false
+        }).catch(err => {
+          this.isLoading = false
+          this.output = err.message
         })
     }
   }

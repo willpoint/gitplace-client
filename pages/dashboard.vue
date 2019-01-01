@@ -2,7 +2,7 @@
   <div class="section">
     <div class="columns">
       <div class="column is-6">
-        <p class="title is-6">Contribution Table</p>
+        <p class="title is-6">Contributions Table</p>
         <b-table
           :data="contributions"
           :striped="true"
@@ -38,7 +38,7 @@
           <summary-chart 
             :chart-data="summary"
             :options="options"
-            height="450"
+            :height="450"
           />
         </div>
       </div>
