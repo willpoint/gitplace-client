@@ -14,9 +14,11 @@
     <div class="navbar-menu">
       <div class="navbar-start">
         
-        <!-- <a class="navbar-item">
-          Documentation
-        </a> -->
+        <a 
+          class="navbar-item"
+          @click="showAbout">
+          About
+        </a>
 
       </div>
     </div>
@@ -25,11 +27,23 @@
 
 <script>
 import { mapState } from 'vuex'
+import About from '@/components/common/About'
 export default {
   computed: {
-    ...mapState([
-      'version'
-    ])
+    ...mapState(['version'])
+  },
+  methods: {
+    showAbout() {
+      const vm = this
+      vm.$modal.open({
+        parent: vm,
+        component: About,
+        hasModalCard: true,
+        props: {
+          version: vm.version
+        }
+      })
+    }
   },
   created() {
     this.$store.commit('GET_DATA', {
