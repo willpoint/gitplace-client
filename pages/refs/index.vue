@@ -158,13 +158,15 @@ export default {
   fetch({store}) {
     const branches = store.dispatch('branches', {
       type: 'branches',
-      body: 'branch'
+      body: 'branch -a'
     })
     const tags = store.dispatch('tags', {
       type: 'tags',
       body: 'tag'
     })
-    return Promise.all([branches, tags])
+    return Promise.all([branches, tags]).catch((err) => {
+      
+    })
   },
   data() {
     return {
@@ -206,7 +208,7 @@ export default {
       })
       this.$store.commit('GET_DATA', {
         type: 'branches',
-        body: 'branch'
+        body: 'branch -a'
       })
       this.form[name] = null
     }
