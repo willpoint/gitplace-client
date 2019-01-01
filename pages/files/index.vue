@@ -89,33 +89,9 @@ export default {
             name: file,
             diff: df.data,
             file_history: fh.data
-          },
-          events: {
-            commit: function(message, name) {
-              vm.$store.commit({
-                type: 'commit_output',
-                body: 'commit -m ' + message + ' ' + name
-              })
-              this.$snackbar.open({
-                duration: 5000,
-                message: 'Snackbar with red action, positioned on bottom-left and a callback',
-                type: 'is-danger',
-                position: 'is-bottom-left',
-                actionText: 'Undo',
-                queue: false,
-                onAction: () => {
-                  this.$toast.open({
-                    message: 'Action pressed',
-                    queue: false
-                  })
-                }
-              })
-            }
           }
         })
-      }).catch((err) => {
-        console.log(err)
-      })
+      }).catch(console.log)
     }
   }
 }

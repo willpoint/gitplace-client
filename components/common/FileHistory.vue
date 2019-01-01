@@ -5,14 +5,6 @@
     </header>
     <section class="modal-card-body">
       <div class="content">
-        <div v-if="canDoCommit">
-          <button
-            class="button is-small is-gold"
-            @click="doCommit">
-            Commit Diff
-          </button>
-          <hr />
-        </div>
         <pre v-html="$convert(file_history)"></pre>
       </div>
     </section>
@@ -28,16 +20,6 @@ export default {
     name: String,
     diff: String,
     file_history: String
-  },
-  computed: {
-    canDoCommit() {
-      return this.diff != ''
-    }
-  },
-  methods: {
-    doCommit() {
-
-    }
   }
 }
 </script>
