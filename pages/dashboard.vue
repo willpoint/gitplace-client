@@ -82,7 +82,7 @@ export default {
         
         let one = {}
         one["name"] = name
-        one["email"] = email
+        one["email"] = email.replace(/[<>]/g, '')
         one["contribs"] = contrib[0]
         ret.push(one)
       }
