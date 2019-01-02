@@ -75,77 +75,100 @@
         </div>
       </div>
       <div class="column is-8">
-        <div class="box">
-          <p class="title is-6">Branches ({{filteredBranches.length }})</p>
-          <div>
-            <div
-              v-if="filteredBranches.length > 0"
-              attached>
-              <b-field 
-                grouped 
-                group-multiline>
+        <div class="reflist">
+          <b-collapse class="card">
+            <div slot="trigger" slot-scope="props" class="card-header">
+              <p class="card-header-title">
+                Branches ({{filteredBranches.length}})
+              </p>
+              <a class="card-header-icon">
+                <b-icon :icon="props.open ? 'menu-down' : 'menu-up'" />
+              </a>
+            </div>
+            <div class="card-content">
+              <div>
                 <div
-                  v-for="(c, i) in filteredBranches"
-                  :key="i" 
-                  class="control">
-                  <b-taglist attached>
-                    <b-tag type="is-warning">
-                      <b-icon 
-                        icon="source-branch"
-                        size="is-small"
-                      />
-                    </b-tag>
-                    <b-tag type="is-dark">{{ c }}</b-tag>
-                  </b-taglist>
+                  v-if="filteredBranches.length > 0"
+                  attached>
+                  <b-field 
+                    grouped 
+                    group-multiline>
+                    <div
+                      v-for="(c, i) in filteredBranches"
+                      :key="i" 
+                      class="control">
+                      <b-taglist attached>
+                        <b-tag type="is-warning">
+                          <b-icon 
+                            icon="source-branch"
+                            size="is-small"
+                          />
+                        </b-tag>
+                        <b-tag type="is-dark">{{ c }}</b-tag>
+                      </b-taglist>
+                    </div>
+                  </b-field>
                 </div>
-              </b-field>
+                <div v-else>
+                  <b-tag type="is-gold">
+                    <b-icon 
+                      icon="tag-multiple"
+                      size="is-small"
+                    />
+                    (no branches?)
+                  </b-tag>
+                </div>
+              </div>
             </div>
-            <div v-else>
-              <b-tag type="is-gold">
-                <b-icon 
-                  icon="tag-multiple"
-                  size="is-small"
-                />
-                (no branches?)
-              </b-tag>
-            </div>
-          </div>
+          </b-collapse>
         </div>
-        <div class="box">
-          <p class="title is-6">Tags ({{filteredTags.length}})</p>
-          <div>
-            <div
-              v-if="filteredTags.length > 0"
-              attached>
-              <b-field 
-                grouped 
-                group-multiline>
+        <hr />
+        <div class="reflist">
+          <b-collapse class="card">
+            <div slot="trigger" slot-scope="props" class="card-header">
+              <p class="card-header-title">
+                Tags ({{filteredTags.length}})
+              </p>
+              <a class="card-header-icon">
+                <b-icon :icon="props.open ? 'menu-down' : 'menu-up'" />
+              </a>
+            </div>
+            <div class="card-content">
+              <div>
                 <div
-                  v-for="(c, i) in filteredTags"
-                  :key="i" 
-                  class="control">
-                  <b-taglist attached>
-                    <b-tag type="is-gold">
-                      <b-icon 
-                        icon="tag-multiple"
-                        size="is-small"
-                      />
-                    </b-tag>
-                    <b-tag type="is-dark">{{ c }}</b-tag>
-                  </b-taglist>
+                  v-if="filteredTags.length > 0"
+                  attached>
+                  <b-field 
+                    grouped 
+                    group-multiline>
+                    <div
+                      v-for="(c, i) in filteredTags"
+                      :key="i" 
+                      class="control">
+                      <b-taglist attached>
+                        <b-tag type="is-warning">
+                          <b-icon 
+                            icon="source-branch"
+                            size="is-small"
+                          />
+                        </b-tag>
+                        <b-tag type="is-dark">{{ c }}</b-tag>
+                      </b-taglist>
+                    </div>
+                  </b-field>
                 </div>
-              </b-field>
+                <div v-else>
+                  <b-tag type="is-gold">
+                    <b-icon 
+                      icon="tag-multiple"
+                      size="is-small"
+                    />
+                    (no tags)
+                  </b-tag>
+                </div>
+              </div>
             </div>
-            <div v-else>
-              <b-tag type="is-gold">
-                <b-icon 
-                  icon="tag-multiple"
-                  size="is-small"
-                />
-                (no tags)
-              </b-tag>
-            </div>
-          </div>
+          </b-collapse>
         </div>
       </div>
     </div>
@@ -217,5 +240,8 @@ export default {
 </script>
 
 <style>
-
+  .reflist .card {
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
 </style>
