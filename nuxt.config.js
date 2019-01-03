@@ -35,7 +35,6 @@ module.exports = {
     resourceHints: false
   },
   env: {
-    socketURL: 'ws://localhost:12345/echo',
-    httpURL: 'http://localhost:12345/command'
+    mode: "development"
   }
 }

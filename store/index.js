@@ -1,9 +1,17 @@
 import createWebSocketPlugin from '@/utils/socket.js'
 import axios from 'axios'
 
-// todo(uz): Make this address dynamic?
-const httpURL = process.env.httpURL
-const wsURL = process.env.socketURL
+const URL = new window.URL(window.location.href)
+
+let httpURL = "http://"+URL.host+"/command"
+let wsURL = "ws://"+URL.host+"/echo"
+
+// use when in development
+if (process.env.mode === 'development') {
+  httpURL = "http://localhost:5959/command"
+  wsURL = "ws://localhost:5959/echo"
+}
+
 const ws = new WebSocket(wsURL)
 
 const dataTypes = [
