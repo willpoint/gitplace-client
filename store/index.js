@@ -17,7 +17,7 @@ const ws = new WebSocket(wsURL)
 const dataTypes = [
   'version', 'branches', 'files', 
   'shortlog', 'notification', 'file_history', 
-  'diff', 'commit_output', 'logs', 
+  'diff', 'commit_output', 'logs', 'toplevel', 
   'num_commits', 'tags', 'file_content'
 ]
 

@@ -104,7 +104,7 @@ export default {
       tags: [
         {name: 'Last Changeset', command: 'diff HEAD^ HEAD --color'},
         {name: 'Commit Log', command: 'log -w --max-count=20 --skip=0 --color --stat --abbrev-commit --date=local', paginate: true},
-        {name: 'Commit Graph', command: 'log -w --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=oneline --date=local', paginate: true},
+        {name: 'Commit Graph', command: 'log -w --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=oneline', paginate: true},
         {name: 'Status', command: 'status'}
       ]
     }
