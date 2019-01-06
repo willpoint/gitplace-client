@@ -21,6 +21,7 @@
     "bulma": "^0.6.1",
     "bulma-steps-component": "^0.5.3",
     "chart.js": "^2.7.2",
+    "highlight.js": "^9.13.1",
     "material-icons": "^0.1.0",
     "nuxt": "^1.0.0-rc11",
     "vue-chartjs": "^3.2.1"

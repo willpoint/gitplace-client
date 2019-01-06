@@ -2,9 +2,6 @@
   <aside
     style="position:relative;height:90vh" 
     class="menu">
-    <p class="menu-label">
-      Revisions
-    </p>
     <ul class="menu-list">
       <li>
         <nuxt-link to="/dashboard">
@@ -36,7 +33,7 @@
 </template>
 
 <style>
-  .nuxt-link-exact-active.nuxt-link-active {
+  a.nuxt-link-active {
     background-color: #333;
     color: #fff;
   }

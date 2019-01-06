@@ -37,9 +37,9 @@ export default {
     min-height: 95vh;
     top: 0;
     bottom: 0;
-    width: 230px;
+    width: 190px;
   }
   .main {
-    margin-left: 230px;
+    margin-left: 190px;
   }
 </style>

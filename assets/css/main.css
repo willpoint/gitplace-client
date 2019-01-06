@@ -4,3 +4,15 @@
 .page-enter, .page-leave-to {
   opacity: 0;
 }
+pre, code {
+  background-color: #fff;
+  color: #555;
+  font-weight: 600;
+  font-size: 14px;
+}
+pre code {
+  background-color: #fff;
+  color: #555;
+  font-weight: 600;
+  font-size: 15px;
+}

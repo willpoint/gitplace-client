@@ -103,8 +103,17 @@ export default {
       perPage: 20,
       tags: [
         {name: 'Last Changeset', command: 'diff HEAD^ HEAD --color'},
-        {name: 'Commit Log', command: 'log -w --max-count=20 --skip=0 --color --stat --abbrev-commit --date=local', paginate: true},
-        {name: 'Commit Graph', command: 'log -w --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=oneline', paginate: true},
+        {
+          name: 'Commit Log', 
+          command: 
+          `log --max-count=20 --skip=0 --color --stat --abbrev-commit --date=local`, 
+          paginate: true
+        },
+        {
+          name: 'Commit Graph', 
+          command: "log --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=format:%h::[%an]::(%ar)::%s", 
+          paginate: true
+        },
         {name: 'Status', command: 'status'}
       ]
     }

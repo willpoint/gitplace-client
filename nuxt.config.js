@@ -15,13 +15,15 @@ module.exports = {
     height: '30px;'
   },
   css: [
-    {src: '~/assets/css/main.css'},
     {src: '~/assets/css/material-icons.css'},
     {src: '~/assets/css/buefy-overrides.scss', lang: 'sass'},
+    {src: '~/node_modules/highlight.js/styles/atom-one-light.css'},
+    {src: '~/assets/css/main.css'},
   ],
   plugins: [
     {src: '~plugins/buefy'},
     {src: '~plugins/ansi-to-html'},
+    {src: '~plugins/highlight'}
   ],
   mode: 'spa',
   build: {

@@ -2,7 +2,7 @@
   <div class="section">
     <div class="columns">
       <div class="column is-6">
-        <p class="title is-6">Contributions Table</p>
+        <p class="title is-6">Contributions ({{total}})</p>
         <b-table
           :data="contributions"
           :striped="true"

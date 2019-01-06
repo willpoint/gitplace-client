@@ -1,43 +1,51 @@
 <template>
-  <b-field expanded>
-    <b-input
-      size="is-small"
-      icon="file"
-      :value="name" 
-      readonly
-      expanded>
-    </b-input>
-    <p class="control">
-      <button 
-        class="button is-small is-dark"
-        @click="viewHistory">
+  <div>
+    <p class="">
+      <span v-if="meta.type === 'blob'">
         <b-icon 
-          icon="history" 
+          icon="file-outline" 
           size="is-small"
+          type="is-dark"
         />
-      </button>
+        &nbsp;
+        <a @click="viewFile(meta.name)">{{ meta.name }}</a>
+      </span>
+      <span v-else-if="meta.type === 'tree'">
+        <b-icon
+          icon="folder"
+          size="is-small"
+          type="is-dark"
+        />
+        &nbsp;
+        <a @click="viewFolder(meta.name)">{{ meta.name }}</a>
+      </span>
+      <span v-else>
+        <b-icon 
+          icon="folder" 
+          size="is-small"
+          type="is-success"
+        />
+        &nbsp;
+        {{ meta.name }}
+      </span>
     </p>
-    <p class="control">
-      <button 
-        class="button is-small is-gold"
-        @click="viewFile">
-        view
-      </button>
-    </p>
-  </b-field>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    name: String
+    meta: {
+      type: Object,
+      default: () => ({})
+    }
   },
   methods: {
-    viewHistory() {
-      this.$emit('history', this.name)
+    viewFile(name) {
+      this.$emit('file', name)
     },
-    viewFile() {
-      this.$emit('file', this.name)
+    viewFolder(folder) {
+      this.$emit('folder', folder)
     }
   }
 }
