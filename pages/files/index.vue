@@ -1,22 +1,31 @@
 <template>
   <div class="section">
-    <p class="title is-6">Project Files</p>
+    <p class="title is-6">Project Files - ({{current_file}})</p>
     <div class="columns">
-      <div class="column is-5">
+      <div class="column is-4">
         <div class="box">
-          <git-file
-            v-for="(f, i) in fileArray"
-            :key="i"
-            :name="f"
-            @history="showHistory"
-            @file="showFile"
-          />
+          <b-table
+            :data="fileArray"
+            :narrowed="true"
+            :hoverable="true">
+            <template slot-scope="props">
+              <b-table-column field="name" label="Name">
+                <git-file
+                  :meta="props.row"
+                  @file="showFile"
+                  @folder="gotoFolder"
+                />
+              </b-table-column>
+              <b-table-column field="type" numeric>
+                <span class="tag is-gold">{{props.row.type}}</span>
+              </b-table-column>
+            </template>
+          </b-table>
         </div>
       </div>
-      <div class="column is-7">
+      <div class="column is-8">
         <div class="box">
-          <p class="title is-6">{{ current_file }}</p>
-          <pre><code>{{ file_content || 'Click view to see the content of a file' }}</code></pre>
+          <pre><code v-html="file_content || 'Click on file to display here'"></code></pre>
         </div>
       </div>
     </div>
@@ -26,12 +35,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import GitFile from '@/components/common/File'
-import FileHistory from '@/components/common/FileHistory'
 export default {
   fetch({store}) {
     return store.dispatch('branches', {
       type: 'files',
-      body: 'ls-files'
+      body: 'ls-tree HEAD'
     })
   },
   computed: {
@@ -39,7 +47,12 @@ export default {
       ['files']
     ),
     fileArray() {
-      return this.files.split('\n').filter(f => f != '')
+      const arr = this.files.split('\n').filter(f => f != '')
+      const content = arr.map((a) => {
+        let meta = a.split(/[\s\t]/)
+        return {name: meta[3], sha1: meta[2], type: meta[1]}
+      })
+      return content
     }
   },
   components: {
@@ -53,45 +66,34 @@ export default {
   },
   methods: {
     showFile(file) {
+      if (this.current_file === file) return // don't rerender the file
       this.current_file = file
-      return new Promise((resolve, reject) => {
-        this.$store.dispatch('file_content', {
+      this.file_content = 'Loading...'
+      this.$store.dispatch('file_content', {
+        type: 'file_content',
+        body: 'ls-files -s -- ' + file
+      }).then(resp => {
+        const sha1 = resp.data.split(' ')[1]
+        return sha1
+      }).then(sha1 => {
+        return this.$store.dispatch('file_content', {
           type: 'file_content',
-          body: 'ls-files -s -- ' + file
-        }).then(resp => {
-          const sha1 = resp.data.split(' ')[1]
-          this.$store.dispatch('file_content', {
-              type: 'file_content',
-              body: 'cat-file ' + sha1 + ' -p'
-            }).then((rsp) => {
-              this.file_content = rsp.data
-            })
+          body: 'cat-file ' + sha1 + ' -p'
         })
+      }).then(rsp => {
+        var ext = file.slice(file.lastIndexOf('.'))
+        var excludes = ['.txt', '.md', '.html', '.gitignore', '.gitattributes', '.1']
+        if (excludes.includes(ext)) {
+          this.file_content = rsp.data
+        } else if (file.indexOf('.') == -1) {
+          this.file_content = rsp.data
+        } else {
+          this.file_content = this.$highlight(rsp.data)
+        }
       })
     },
-    showHistory(file) {
-      const vm = this
-      Promise.all([
-        vm.$store.dispatch('file_history', {
-          type: 'file_history',
-          body: 'log -w --follow --abbrev-commit --stat --color -- ' + file
-        }),
-        vm.$store.dispatch('diff', {
-          type: 'diff',
-          body: 'diff --cached'
-        })
-      ]).then(([fh, df]) => {
-        vm.$modal.open({
-          parent: vm,
-          component: FileHistory,
-          hasModalCard: true,
-          props: {
-            name: file,
-            diff: df.data,
-            file_history: fh.data
-          }
-        })
-      }).catch(console.log)
+    gotoFolder(folder) {
+      this.$router.push(this.$route.fullPath + "/" + folder)
     }
   }
 }
