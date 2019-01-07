@@ -72,6 +72,13 @@
             </form>
             <hr />
           </div>
+          <b-message
+            v-if="errormsg" 
+            type="is-danger" 
+            size="is-small"
+            has-icon>
+            {{ errormsg }}
+          </b-message>
         </div>
       </div>
       <div class="column is-8">
@@ -98,7 +105,7 @@
                       :key="i" 
                       class="control">
                       <b-taglist attached>
-                        <b-tag type="is-warning">
+                        <b-tag type="is-gold">
                           <b-icon 
                             icon="source-branch"
                             size="is-small"
@@ -146,7 +153,7 @@
                       :key="i" 
                       class="control">
                       <b-taglist attached>
-                        <b-tag type="is-warning">
+                        <b-tag type="is-success">
                           <b-icon 
                             icon="source-branch"
                             size="is-small"
@@ -193,6 +200,7 @@ export default {
   },
   data() {
     return {
+      errormsg: '',
       form: {
         branch: null,
         tag: null,
@@ -224,16 +232,22 @@ export default {
   },
   methods: {
     handleCheckout(name) {
+      this.isLoading = true
       let ref = this.form[name]
-      this.$store.commit('GET_DATA', {
+      this.$store.dispatch('notification', {
         type: 'notification',
         body: 'checkout ' + ref
+      }).then(d => {
+        this.$store.commit('GET_DATA', {
+          type: 'branches',
+          body: 'branch -a'
+        })
+        this.form[name] = null
+        this.isLoading = false
+      }).catch(err => {
+        this.isLoading = false
+        this.errormsg = 'Aborted: You may have uncommitted changes, please commit your changes or stash them before you switch branches'
       })
-      this.$store.commit('GET_DATA', {
-        type: 'branches',
-        body: 'branch -a'
-      })
-      this.form[name] = null
     }
   }
 }

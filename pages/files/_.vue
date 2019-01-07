@@ -1,16 +1,29 @@
 <template>
   <div class="section">
-    <p class="title is-6">Project Files - ({{current_file}})</p>
+    <div class="columns">
+      <div class="column is-4">
+        <p class="title is-6">
+          Project Files
+        </p>
+      </div>
+      <div class="column is-8">
+        <p class="title is-6">
+          {{current_file}}
+        </p>
+      </div>
+    </div>
     <div class="columns">
       <div class="column is-4">
         <div class="box">
           <b-table
             :data="fileArray"
+            :selected.sync="selected"
             :narrowed="true"
             :hoverable="true">
             <template slot-scope="props">
               <b-table-column field="name" label="Name">
                 <git-file
+                  style="font-size:14px"
                   :meta="props.row"
                   @file="showFile"
                   @folder="gotoFolder"
@@ -66,7 +79,8 @@ export default {
   data() {
     return {
       file_content: '',
-      current_file: ''
+      current_file: '',
+      selected: {}
     }
   },
   methods: {
@@ -90,7 +104,10 @@ export default {
         })
       }).then(rsp => {
         var ext = file.slice(file.lastIndexOf('.'))
-        var excludes = ['.txt', '.md', '.html', '.gitignore', '.gitattributes', '.1']
+        var excludes = [
+          '.txt', '.md', '.html', '.gitignore', '.gitattributes', 
+          '.editorconfig', '.1'
+        ]
         if (excludes.includes(ext)) {
           this.file_content = rsp.data
         } else if (file.indexOf('.') == -1) {
@@ -98,6 +115,8 @@ export default {
         } else {
           this.file_content = this.$highlight(rsp.data)
         }
+      }).catch(err => {
+        this.file_content = 'Error loading file - this can happen if there is a space in the filename'
       })
     },
     gotoFolder(folder) {

@@ -6,8 +6,8 @@
     <section class="modal-card-body">
       <div class="content has-text-centered">
         <div class="has-text-dark is-6">
-          GitPlace is a tool to understand the history of a Git <br/>
-          repository in a read-only, simple interface.
+          GitPlace is a tool to understand/explore the history of a software project <br />
+          that uses Git as it's VCS in a read-only, simple interface.
           <div class="version-control">
             <img 
               src="~assets/undraw_version_control_9bpv.svg" 

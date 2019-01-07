@@ -2,22 +2,30 @@
   <div>
     <p class="">
       <span v-if="meta.type === 'blob'">
-        <b-icon 
-          icon="file-outline" 
-          size="is-small"
-          type="is-dark"
-        />
-        &nbsp;
-        <a @click="viewFile(meta.name)">{{ meta.name }}</a>
+        <a
+          class="selected"
+          @click="viewFile(meta.name)">
+          <b-icon 
+            icon="file-outline" 
+            size="is-small"
+            type="is-gold"
+          />
+          &nbsp;
+          {{ meta.name }}
+        </a>
       </span>
       <span v-else-if="meta.type === 'tree'">
-        <b-icon
-          icon="folder"
-          size="is-small"
-          type="is-dark"
-        />
-        &nbsp;
-        <a @click="viewFolder(meta.name)">{{ meta.name }}</a>
+        <a
+          class="selected"
+          @click="viewFolder(meta.name)">
+          <b-icon
+            icon="folder"
+            size="is-small"
+            type="is-gold"
+          />
+          &nbsp;
+          {{ meta.name }}
+        </a>
       </span>
       <span v-else>
         <b-icon 
@@ -52,5 +60,8 @@ export default {
 </script>
 
 <style>
-
+  .selected {
+    display:inline-block;
+    width:100%;
+  }
 </style>

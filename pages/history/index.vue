@@ -79,7 +79,6 @@
 </template>
 
 <script>
-import PTexts from '@/components/common/Paragraphs'
 import { mapGetters } from 'vuex'
 export default {
   fetch({store}) {
@@ -103,23 +102,11 @@ export default {
       perPage: 20,
       tags: [
         {name: 'Last Changeset', command: 'diff HEAD^ HEAD --color'},
-        {
-          name: 'Commit Log', 
-          command: 
-          `log --max-count=20 --skip=0 --color --stat --abbrev-commit --date=local`, 
-          paginate: true
-        },
-        {
-          name: 'Commit Graph', 
-          command: "log --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=format:%h::[%an]::(%ar)::%s", 
-          paginate: true
-        },
+        {name: 'Commit Log', command: `log --max-count=20 --skip=0 --color --stat --abbrev-commit --date=local`, paginate: true},
+        {name: 'Commit Graph', command: "log --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=format:%h::[%an]::(%ar)::%s", paginate: true},
         {name: 'Status', command: 'status'}
       ]
     }
-  },
-  components: {
-    PTexts
   },
   created() {
     this.handleTabChange(0)
@@ -173,7 +160,7 @@ export default {
           this.isLoading = false
         }).catch(err => {
           this.isLoading = false
-          this.output = err.message
+          this.output = 'There is no previous commit to generate a change set'
         })
     }
   }
