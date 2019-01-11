@@ -8,7 +8,7 @@
           <b-icon 
             icon="file-outline" 
             size="is-small"
-            type="is-gold"
+            type="is-success"
           />
           &nbsp;
           {{ meta.name }}
@@ -21,7 +21,7 @@
           <b-icon
             icon="folder"
             size="is-small"
-            type="is-gold"
+            type="is-success"
           />
           &nbsp;
           {{ meta.name }}

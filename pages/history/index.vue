@@ -3,13 +3,11 @@
     <b-tabs
       v-model="activeTab"
       @input="handleTabChange"
-      type="is-toggle-rounded"
+      type="is-toggle"
       size="is-small"
       position="is-centered">
       <b-tab-item label="Last Change-Set">
-        <div
-          style="position:relative" 
-          class="box">
+        <div class="box data">
           <pre v-html="$convert(output) || 'No information to display'"></pre>
           <b-loading
             class="loading" 
@@ -19,9 +17,7 @@
         </div>
       </b-tab-item>
       <b-tab-item label="Commit Log">
-        <div
-          style="position:relative" 
-          class="box">
+        <div class="box data">
           <pre v-html="$convert(output) || 'No information to display'"></pre>
           <b-loading
             class="loading" 
@@ -41,9 +37,7 @@
         </div>
       </b-tab-item>
       <b-tab-item label="Commit Graph">
-        <div
-          style="position:relative" 
-          class="box">
+        <div class="box data">
           <pre v-html="$convert(output) || 'No information to display'"></pre>
           <b-loading
             class="loading" 
@@ -62,11 +56,29 @@
           />
         </div>
       </b-tab-item>
+      <b-tab-item label="WorkTree Changes">
+        <div class="box data">
+          <pre v-html="$convert(output) || 'No changes made in your working directory.'"></pre>
+          <b-loading
+            class="loading" 
+            :is-full-page="false" 
+            :active.sync="isLoading" 
+          />
+        </div>
+      </b-tab-item>
+      <b-tab-item label="Uncommitted Changes">
+        <div class="box data">
+          <pre v-html="$convert(output) || 'No changes added for the next commit.'"></pre>
+          <b-loading
+            class="loading" 
+            :is-full-page="false" 
+            :active.sync="isLoading" 
+          />
+        </div>
+      </b-tab-item>
       <b-tab-item label="Status">
-        <div
-          style="position:relative" 
-          class="box">
-          <pre v-html="$convert(output) || 'No information to display'" />
+        <div class="box data">
+          <pre v-html="$convert(output)" />
           <b-loading
             class="loading" 
             :is-full-page="false" 
@@ -103,7 +115,9 @@ export default {
       tags: [
         {name: 'Last Changeset', command: 'diff HEAD^ HEAD --color'},
         {name: 'Commit Log', command: `log --max-count=20 --skip=0 --color --stat --abbrev-commit --date=local`, paginate: true},
-        {name: 'Commit Graph', command: "log --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=format:%h::[%an]::(%ar)::%s", paginate: true},
+        {name: 'Commit Graph', command: "log --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=format:%h|%an|(%ar)::%s", paginate: true},
+        {name: 'WorkTree Changes', command: "diff HEAD --color"},
+        {name: 'Uncommitted Changes', command: "diff HEAD --cached --color"},
         {name: 'Status', command: 'status'}
       ]
     }
@@ -112,21 +126,6 @@ export default {
     this.handleTabChange(0)
   },
   methods: {
-    handleClick(data, paginate) {
-      this.currentCommand = data.body
-      this.output = 'Loading...'
-      if (paginate) this.doPagination = true
-      else this.doPagination = false
-      this.isLoading = true
-      this.$store.dispatch('logs', data)
-        .then(({data}) => {
-          this.output = data
-          this.isLoading = false
-        }).catch(err => {
-          this.isLoading = false
-          this.output = err.message
-        })
-    },
     handlePageChange(a) {
       this.isLoading = true
       let skip = (Number(a) - 1) * this.perPage
@@ -137,10 +136,10 @@ export default {
         body: newCmd
       }).then(({data}) => {
         this.output = data
-        this.isLoading = false
       }).catch(err => {
-        this.isLoading = false
         this.output = err.message
+      }).finally(() => {
+        this.isLoading = false
       })
     },
     handleTabChange(num) {
@@ -157,10 +156,10 @@ export default {
       this.$store.dispatch('logs', {type: 'logs', body: data.command})
         .then(({data}) => {
           this.output = data
-          this.isLoading = false
         }).catch(err => {
-          this.isLoading = false
           this.output = 'There is no previous commit to generate a change set'
+        }).finally(() => {
+          this.isLoading = false
         })
     }
   }

@@ -25,7 +25,7 @@
             </b-table-column>
 
             <b-table-column field="contrib" label="#" numeric>
-              <span class="tag is-gold">
+              <span class="tag is-success">
                 {{ props.row.contribs }}
               </span>
             </b-table-column>

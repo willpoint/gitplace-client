@@ -1,9 +1,12 @@
 @import '~bulma/sass/utilities/_all';
 
-$primary: #333;
+$primary: #2d888d;
 $primary-invert: findColorInvert($primary);
 $light-gold: #dbd49b;
 $inverse-gold: findColorInvert($light-gold);
+$success: #71c386;
+$success-invert: findColorInvert($success);
+$warning: rgb(212, 126, 57);
 
 // set up colors to use as bulma classes eg. (is-white)
 $colors: (
@@ -24,9 +27,6 @@ $colors: (
   $link-invert: $primary-invert;
   $link-focus-border: $primary;
   $section-padding: 1.5rem 1.5rem;
-  $box-background-color: rgba(249, 249, 249, 1);
-
-  $menu-item-active-background-color: $dark;
   $modal-card-body-background-color: $white;
 
     

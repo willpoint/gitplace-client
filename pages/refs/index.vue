@@ -22,7 +22,7 @@
                 </b-select>
               </b-field>
               <button 
-                class="button is-small is-gold">
+                class="button is-small is-success">
                 Checkout
               </button>
             </form>
@@ -47,7 +47,7 @@
                 </b-select>
               </b-field>
               <button 
-                class="button is-small is-gold">
+                class="button is-small is-success">
                 Checkout
               </button>
             </form>
@@ -66,7 +66,7 @@
                 />
               </b-field>
               <button 
-                class="button is-small is-gold">
+                class="button is-small is-success">
                 Checkout
               </button>
             </form>
@@ -105,7 +105,7 @@
                       :key="i" 
                       class="control">
                       <b-taglist attached>
-                        <b-tag type="is-gold">
+                        <b-tag type="is-success">
                           <b-icon 
                             icon="source-branch"
                             size="is-small"
@@ -117,7 +117,7 @@
                   </b-field>
                 </div>
                 <div v-else>
-                  <b-tag type="is-gold">
+                  <b-tag type="is-success">
                     <b-icon 
                       icon="tag-multiple"
                       size="is-small"
@@ -153,10 +153,11 @@
                       :key="i" 
                       class="control">
                       <b-taglist attached>
-                        <b-tag type="is-success">
+                        <b-tag type="is-light">
                           <b-icon 
-                            icon="source-branch"
+                            icon="tag-multiple"
                             size="is-small"
+                            type="is-primary"
                           />
                         </b-tag>
                         <b-tag type="is-dark">{{ c }}</b-tag>
@@ -165,7 +166,7 @@
                   </b-field>
                 </div>
                 <div v-else>
-                  <b-tag type="is-gold">
+                  <b-tag type="is-success">
                     <b-icon 
                       icon="tag-multiple"
                       size="is-small"
@@ -256,6 +257,6 @@ export default {
 <style>
   .reflist .card {
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.1);
   }
 </style>

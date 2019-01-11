@@ -8,12 +8,12 @@
         <div class="has-text-dark is-6">
           GitPlace is a tool to understand/explore the history of a software project <br />
           that uses Git as it's VCS in a read-only, simple interface.
-          <div class="version-control">
+          <!-- <div class="version-control">
             <img 
               src="~assets/undraw_version_control_9bpv.svg" 
               alt="version control"
             />
-          </div>
+          </div> -->
           Send suggestions to the developer at 
           <a 
             href="mailto:willpoint@gmail.com">

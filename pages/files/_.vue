@@ -1,19 +1,7 @@
 <template>
   <div class="section">
     <div class="columns">
-      <div class="column is-4">
-        <p class="title is-6">
-          Project Files
-        </p>
-      </div>
-      <div class="column is-8">
-        <p class="title is-6">
-          {{current_file}}
-        </p>
-      </div>
-    </div>
-    <div class="columns">
-      <div class="column is-4">
+      <div class="column is-12">
         <div class="box">
           <b-table
             :data="fileArray"
@@ -30,15 +18,10 @@
                 />
               </b-table-column>
               <b-table-column field="type" numeric>
-                <span class="tag is-gold">{{props.row.type}}</span>
+                <span class="tag is-success">{{props.row.type}}</span>
               </b-table-column>
             </template>
           </b-table>
-        </div>
-      </div>
-      <div class="column is-8">
-        <div class="box">
-          <pre><code v-html="file_content || 'Click on file to display here'"></code></pre>
         </div>
       </div>
     </div>
@@ -88,35 +71,12 @@ export default {
       const pp = this.$route.fullPath.split('/').filter(f => f != '')
       const [, ...rest] = pp
       const file = rest.join('/') + '/' + name
-      if (this.current_file === file) return // don't rerender the file
-      this.current_file = file
-      this.file_content = 'Loading...'
       this.$store.dispatch('file_content', {
         type: 'file_content',
         body: 'ls-files -s -- ' + file
       }).then(resp => {
         const sha1 = resp.data.split(' ')[1]
-        return sha1
-      }).then(sha1 => {
-        return this.$store.dispatch('file_content', {
-          type: 'file_content',
-          body: 'cat-file ' + sha1 + ' -p'
-        })
-      }).then(rsp => {
-        var ext = file.slice(file.lastIndexOf('.'))
-        var excludes = [
-          '.txt', '.md', '.html', '.gitignore', '.gitattributes', 
-          '.editorconfig', '.1'
-        ]
-        if (excludes.includes(ext)) {
-          this.file_content = rsp.data
-        } else if (file.indexOf('.') == -1) {
-          this.file_content = rsp.data
-        } else {
-          this.file_content = this.$highlight(rsp.data)
-        }
-      }).catch(err => {
-        this.file_content = 'Error loading file - this can happen if there is a space in the filename'
+        this.$router.push('/blob/'+sha1 + '?name=' + file)
       })
     },
     gotoFolder(folder) {

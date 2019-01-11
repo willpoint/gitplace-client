@@ -1,6 +1,6 @@
 <template>
   <aside
-    style="position:relative;height:90vh" 
+    style="position:relative;height:100vh" 
     class="menu">
     <ul class="menu-list">
       <li>
@@ -27,6 +27,12 @@
           Files
         </nuxt-link>
       </li>
+      <li>
+        <nuxt-link to="/stash-reflog">
+          <b-icon icon="history" size="is-small"></b-icon>
+          Stash/Reflog
+        </nuxt-link>
+      </li>
     </ul>
 
   </aside>
@@ -34,8 +40,12 @@
 
 <style>
   a.nuxt-link-active {
-    background-color: #333;
+    background-color: #3eaaaf;
     color: #fff;
+  }
+  .menu-list a:hover {
+    background-color: #fff;
+    color: #3eaaaf;
   }
   .sidebar-bottom {
     position: absolute;

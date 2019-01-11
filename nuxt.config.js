@@ -11,7 +11,7 @@ module.exports = {
     ]
   },
   loading: { 
-    color: 'gold',
+    color: '#3eaaaf',
     height: '30px;'
   },
   css: [
@@ -37,6 +37,6 @@ module.exports = {
     resourceHints: false
   },
   env: {
-    mode: "development"
+    mode: 'development'
   }
 }
