@@ -65,6 +65,7 @@ export default {
       type: 'toplevel',
       body: 'rev-parse --show-toplevel'
     }).then((resp) => {
+      document.title = 'Git Repository :: ' + resp.data.slice(resp.data.lastIndexOf('/')+1)
       this.dirname = resp.data
     })
   }

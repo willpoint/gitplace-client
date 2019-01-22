@@ -1,5 +1,11 @@
 <template>
   <div class="section">
+    <button
+      class="button is-dark is-small"
+      @click="$router.go(-1)">
+      back
+    </button>
+    <hr />
     <div class="columns">
       <div class="column is-12">
         <div class="box">
@@ -76,7 +82,7 @@ export default {
         body: 'ls-files -s -- ' + file
       }).then(resp => {
         const sha1 = resp.data.split(' ')[1]
-        this.$router.push('/blob/'+sha1 + '?name=' + file)
+        this.$router.push('/files/blob/'+sha1 + '?name=' + file)
       })
     },
     gotoFolder(folder) {

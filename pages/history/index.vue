@@ -7,7 +7,7 @@
       size="is-small"
       position="is-centered">
       <b-tab-item label="Last Change-Set">
-        <div class="box data">
+        <div class="data">
           <pre v-html="$convert(output) || 'No information to display'"></pre>
           <b-loading
             class="loading" 
@@ -113,9 +113,9 @@ export default {
       current: 1,
       perPage: 20,
       tags: [
-        {name: 'Last Changeset', command: 'diff HEAD^ HEAD --color'},
+        {name: 'Last Changeset', command: 'diff --color HEAD^ HEAD'},
         {name: 'Commit Log', command: `log --max-count=20 --skip=0 --color --stat --abbrev-commit --date=local`, paginate: true},
-        {name: 'Commit Graph', command: "log --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=format:%h|%an|(%ar)::%s", paginate: true},
+        {name: 'Commit Graph', command: "log --max-count=20 --skip=0 --color --graph --abbrev-commit --pretty=format:%Cred%h%Creset[%Cgreen%an%Creset](%Cblue%ar%Creset)%s", paginate: true},
         {name: 'WorkTree Changes', command: "diff HEAD --color"},
         {name: 'Uncommitted Changes', command: "diff HEAD --cached --color"},
         {name: 'Status', command: 'status'}

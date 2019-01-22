@@ -71,7 +71,7 @@ export default {
         body: 'ls-files -s -- ' + file
       }).then(resp => {
         const sha1 = resp.data.split(' ')[1]
-        this.$router.push('/blob/'+sha1 + '?name=' + file)
+        this.$router.push('/files/blob/'+sha1 + '?name=' + file)
       })
     },
     gotoFolder(folder) {
